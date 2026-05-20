@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free professional Fitness Calculator: BMI, Daily Calories (TDEE), Gym Macros, and Water Intake. Get personalized health advice instantly." />
+  <meta name="keywords" content="BMI calculator, calorie calculator, TDEE, macros calculator, water intake, fitness, weight loss, muscle gain, health" />
+  <meta property="og:title" content="FitCalc Pro — BMI, Calories, Macros & Water Calculator" />
+  <meta property="og:description" content="Your all-in-one fitness dashboard. Calculate BMI, calories, macros, and water intake with personalized guidance." />
+  <meta name="theme-color" content="#0f172a" />
+  <title>FitCalc Pro — BMI, Calories, Macros & Water Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== BACKGROUND MESH ===== -->
+  <div class="bg-mesh" aria-hidden="true">
+    <div class="mesh-orb mesh-orb--1"></div>
+    <div class="mesh-orb mesh-orb--2"></div>
+    <div class="mesh-orb mesh-orb--3"></div>
+  </div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="header-inner container">
+      <div class="logo">
+        <span class="logo-icon" aria-hidden="true">⚡</span>
+        <span class="logo-text" data-i18n="appName">FitCalc Pro</span>
+      </div>
+      <div class="header-controls">
+        <button class="btn-icon" id="langToggle" aria-label="Toggle language" title="العربية / English">
+          <span class="lang-label" id="langLabel">عربي</span>
+        </button>
+        <button class="btn-icon" id="themeToggle" aria-label="Toggle theme">
+          <span class="theme-icon theme-icon--light" aria-hidden="true">☀️</span>
+          <span class="theme-icon theme-icon--dark" aria-hidden="true">🌙</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="container">
+      <h1 class="hero-title">
+        <span class="hero-title--line1" data-i18n="heroLine1">Your Complete</span>
+        <em class="hero-title--accent" data-i18n="heroLine2">Fitness Dashboard</em>
+      </h1>
+      <p class="hero-sub" data-i18n="heroSub">
+        Calculate BMI, daily calories, gym macros, and water intake — then get a personalized health guide crafted just for your body.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== MAIN APP ===== -->
+  <main class="app-main container">
+
+    <!-- TAB NAV -->
+    <nav class="tab-nav" role="tablist" aria-label="Calculator tools">
+      <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-bmi" data-tab="bmi">
+        <span class="tab-icon" aria-hidden="true">📊</span>
+        <span data-i18n="tabBMI">BMI & Ideal Weight</span>
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-calories" data-tab="calories">
+        <span class="tab-icon" aria-hidden="true">🔥</span>
+        <span data-i18n="tabCalories">Calories & TDEE</span>
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-macros" data-tab="macros">
+        <span class="tab-icon" aria-hidden="true">💪</span>
+        <span data-i18n="tabMacros">Gym Macros</span>
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-water" data-tab="water">
+        <span class="tab-icon" aria-hidden="true">💧</span>
+        <span data-i18n="tabWater">Water Intake</span>
+      </button>
+    </nav>
+
+    <!-- ============================================================ -->
+    <!-- TAB 1: BMI & IDEAL WEIGHT -->
+    <!-- ============================================================ -->
+    <section class="tab-panel active" id="tab-bmi" role="tabpanel" aria-labelledby="btn-bmi">
+      <div class="panel-grid">
+
+        <!-- INPUT CARD -->
+        <div class="card card--input">
+          <div class="card-header">
+            <h2 class="card-title" data-i18n="bmiTitle">BMI & Ideal Weight</h2>
+            <p class="card-desc" data-i18n="bmiDesc">Enter your measurements to calculate your Body Mass Index and ideal weight range.</p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="bmi-unit" data-i18n="unitSystem">Unit System</label>
+            <div class="segmented-control" id="bmi-unit-control">
+              <button class="seg-btn active" data-unit="metric" data-i18n="metric">Metric (kg/cm)</button>
+              <button class="seg-btn" data-unit="imperial" data-i18n="imperial">Imperial (lbs/in)</button>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="bmi-weight">
+                <span data-i18n="weight">Weight</span>
+                <span class="unit-label" id="weightUnitLabel">kg</span>
+              </label>
+              <input class="form-input" type="number" id="bmi-weight" min="1" max="500" placeholder="70" autocomplete="off" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="bmi-height">
+                <span data-i18n="height">Height</span>
+                <span class="unit-label" id="heightUnitLabel">cm</span>
+              </label>
+              <input class="form-input" type="number" id="bmi-height" min="1" max="300" placeholder="175" autocomplete="off" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="bmi-age" data-i18n="age">Age</label>
+              <input class="form-input" type="number" id="bmi-age" min="5" max="120" placeholder="25" autocomplete="off" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-i18n="gender">Gender</label>
+              <div class="segmented-control" id="bmi-gender-control">
+                <button class="seg-btn active" data-gender="male" data-i18n="male">Male</button>
+                <button class="seg-btn" data-gender="female" data-i18n="female">Female</button>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-calculate" id="calcBMI">
+            <span data-i18n="calculate">Calculate</span>
+            <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+
+        <!-- RESULT CARD -->
+        <div class="card card--result" id="bmi-results" aria-live="polite">
+          <div class="result-placeholder" id="bmi-placeholder">
+            <div class="placeholder-icon" aria-hidden="true">📊</div>
+            <p data-i18n="resultPlaceholder">Your results will appear here after calculation.</p>
+          </div>
+
+          <div class="result-content hidden" id="bmi-result-content">
+            <div class="bmi-score-wrap">
+              <div class="bmi-score-circle">
+                <span class="bmi-score-value" id="bmiValue">--</span>
+                <span class="bmi-score-label" data-i18n="bmiLabel">BMI</span>
+              </div>
+              <div class="bmi-score-info">
+                <span class="bmi-status-badge" id="bmiStatusBadge">--</span>
+                <p class="bmi-range-text" id="bmiRangeText"></p>
+              </div>
+            </div>
+
+            <!-- GAUGE -->
+            <div class="bmi-gauge-wrap">
+              <div class="bmi-gauge" aria-hidden="true">
+                <div class="gauge-track">
+                  <div class="gauge-segment seg--underweight"></div>
+                  <div class="gauge-segment seg--healthy"></div>
+                  <div class="gauge-segment seg--overweight"></div>
+                  <div class="gauge-segment seg--obese"></div>
+                </div>
+                <div class="gauge-needle" id="gaugeNeedle"></div>
+                <div class="gauge-labels">
+                  <span data-i18n="underweight">Underweight</span>
+                  <span data-i18n="healthy">Healthy</span>
+                  <span data-i18n="overweight">Overweight</span>
+                  <span data-i18n="obese">Obese</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- IDEAL WEIGHT -->
+            <div class="ideal-weight-card">
+              <h3 class="iw-title" data-i18n="idealWeightTitle">Ideal Weight Range</h3>
+              <div class="iw-range">
+                <div class="iw-item">
+                  <span class="iw-method">Hamwi</span>
+                  <span class="iw-value" id="iwHamwi">--</span>
+                </div>
+                <div class="iw-item">
+                  <span class="iw-method">Devine</span>
+                  <span class="iw-value" id="iwDevine">--</span>
+                </div>
+                <div class="iw-item">
+                  <span class="iw-method">Robinson</span>
+                  <span class="iw-value" id="iwRobinson">--</span>
+                </div>
+                <div class="iw-item iw-item--highlight">
+                  <span class="iw-method" data-i18n="average">Average</span>
+                  <span class="iw-value" id="iwAverage">--</span>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn-export" id="exportBMI">
+              <span aria-hidden="true">⬇</span>
+              <span data-i18n="exportReport">Download Report</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- DYNAMIC ARTICLE -->
+      <div class="article-section hidden" id="bmi-article" aria-live="polite"></div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- TAB 2: CALORIES & TDEE -->
+    <!-- ============================================================ -->
+    <section class="tab-panel" id="tab-calories" role="tabpanel">
+      <div class="panel-grid">
+
+        <div class="card card--input">
+          <div class="card-header">
+            <h2 class="card-title" data-i18n="calTitle">Daily Calories & TDEE</h2>
+            <p class="card-desc" data-i18n="calDesc">Uses the Mifflin-St Jeor Equation to estimate your Basal Metabolic Rate and Total Daily Energy Expenditure.</p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" data-i18n="unitSystem">Unit System</label>
+            <div class="segmented-control" id="cal-unit-control">
+              <button class="seg-btn active" data-unit="metric" data-i18n="metric">Metric (kg/cm)</button>
+              <button class="seg-btn" data-unit="imperial" data-i18n="imperial">Imperial (lbs/in)</button>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="cal-weight">
+                <span data-i18n="weight">Weight</span>
+                <span class="unit-label" id="calWeightUnitLabel">kg</span>
+              </label>
+              <input class="form-input" type="number" id="cal-weight" min="1" placeholder="70" autocomplete="off" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cal-height">
+                <span data-i18n="height">Height</span>
+                <span class="unit-label" id="calHeightUnitLabel">cm</span>
+              </label>
+              <input class="form-input" type="number" id="cal-height" min="1" placeholder="175" autocomplete="off" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="cal-age" data-i18n="age">Age</label>
+              <input class="form-input" type="number" id="cal-age" min="5" max="120" placeholder="25" autocomplete="off" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-i18n="gender">Gender</label>
+              <div class="segmented-control" id="cal-gender-control">
+                <button class="seg-btn active" data-gender="male" data-i18n="male">Male</button>
+                <button class="seg-btn" data-gender="female" data-i18n="female">Female</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="cal-activity" data-i18n="activityLevel">Activity Level</label>
+            <select class="form-select" id="cal-activity">
+              <option value="1.2" data-i18n="actSedentary">Sedentary (desk job, little/no exercise)</option>
+              <option value="1.375" data-i18n="actLight">Lightly Active (1–3 days/week)</option>
+              <option value="1.55" data-i18n="actModerate">Moderately Active (3–5 days/week)</option>
+              <option value="1.725" data-i18n="actVery">Very Active (6–7 days/week)</option>
+              <option value="1.9" data-i18n="actAthlete">Athlete (2x/day, intense training)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" data-i18n="goal">Your Goal</label>
+            <div class="goal-control" id="cal-goal-control">
+              <button class="goal-btn" data-goal="lose" data-i18n="goalLose">🔥 Lose Weight</button>
+              <button class="goal-btn active" data-goal="maintain" data-i18n="goalMaintain">⚖️ Maintain</button>
+              <button class="goal-btn" data-goal="gain" data-i18n="goalGain">💪 Gain Muscle</button>
+            </div>
+          </div>
+
+          <button class="btn-calculate" id="calcCalories">
+            <span data-i18n="calculate">Calculate</span>
+            <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+
+        <div class="card card--result" id="cal-results" aria-live="polite">
+          <div class="result-placeholder" id="cal-placeholder">
+            <div class="placeholder-icon" aria-hidden="true">🔥</div>
+            <p data-i18n="resultPlaceholder">Your results will appear here after calculation.</p>
+          </div>
+
+          <div class="result-content hidden" id="cal-result-content">
+            <div class="cal-main-result">
+              <div class="cal-metric">
+                <span class="cal-metric-value" id="bmrValue">--</span>
+                <span class="cal-metric-label" data-i18n="bmrLabel">BMR (Base)</span>
+                <span class="cal-metric-hint" data-i18n="bmrHint">Calories at rest</span>
+              </div>
+              <div class="cal-divider" aria-hidden="true">→</div>
+              <div class="cal-metric cal-metric--primary">
+                <span class="cal-metric-value" id="tdeeValue">--</span>
+                <span class="cal-metric-label" data-i18n="tdeeLabel">TDEE (Daily)</span>
+                <span class="cal-metric-hint" data-i18n="tdeeHint">With your activity</span>
+              </div>
+            </div>
+
+            <div class="cal-goal-result">
+              <div class="goal-result-card" id="goalResultCard">
+                <div class="goal-result-icon" id="goalResultIcon" aria-hidden="true">⚖️</div>
+                <div class="goal-result-info">
+                  <span class="goal-result-label" id="goalResultLabel" data-i18n="goalMaintain">Maintenance</span>
+                  <span class="goal-result-value" id="goalCalValue">--</span>
+                  <span class="goal-result-sub" data-i18n="caloriesPerDay">calories / day</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="cal-breakdown">
+              <h3 class="breakdown-title" data-i18n="calBreakdownTitle">Weekly Goal Timeline</h3>
+              <div class="breakdown-grid">
+                <div class="breakdown-item">
+                  <span class="breakdown-label" data-i18n="weekly">Weekly</span>
+                  <span class="breakdown-value" id="weeklyChange">--</span>
+                </div>
+                <div class="breakdown-item">
+                  <span class="breakdown-label" data-i18n="monthly">Monthly</span>
+                  <span class="breakdown-value" id="monthlyChange">--</span>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn-export" id="exportCalories">
+              <span aria-hidden="true">⬇</span>
+              <span data-i18n="exportReport">Download Report</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- TAB 3: GYM MACROS -->
+    <!-- ============================================================ -->
+    <section class="tab-panel" id="tab-macros" role="tabpanel">
+      <div class="panel-grid">
+
+        <div class="card card--input">
+          <div class="card-header">
+            <h2 class="card-title" data-i18n="macroTitle">Gym Macros Calculator</h2>
+            <p class="card-desc" data-i18n="macroDesc">Break down your daily calories into the optimal grams of Protein, Carbohydrates, and Fats for your fitness goal.</p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="macro-tdee" data-i18n="macroTDEELabel">Your TDEE / Daily Calories</label>
+            <input class="form-input" type="number" id="macro-tdee" min="800" max="10000" placeholder="2500" autocomplete="off" />
+            <span class="form-hint" data-i18n="macroTDEEHint">Use your result from the Calories tab, or enter manually.</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" data-i18n="goal">Your Fitness Goal</label>
+            <div class="goal-control" id="macro-goal-control">
+              <button class="goal-btn" data-goal="cut" data-i18n="goalCut">🔥 Cut (Fat Loss)</button>
+              <button class="goal-btn active" data-goal="maintain" data-i18n="goalMaintain">⚖️ Maintain</button>
+              <button class="goal-btn" data-goal="bulk" data-i18n="goalBulk">💪 Bulk (Muscle Gain)</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" data-i18n="bodyType">Body Type / Preference</label>
+            <div class="segmented-control" id="macro-body-control">
+              <button class="seg-btn active" data-body="ecto" data-i18n="ecto">Ectomorph</button>
+              <button class="seg-btn" data-body="meso" data-i18n="meso">Mesomorph</button>
+              <button class="seg-btn" data-body="endo" data-i18n="endo">Endomorph</button>
+            </div>
+          </div>
+
+          <button class="btn-calculate" id="calcMacros">
+            <span data-i18n="calculate">Calculate</span>
+            <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+
+        <div class="card card--result" id="macro-results" aria-live="polite">
+          <div class="result-placeholder" id="macro-placeholder">
+            <div class="placeholder-icon" aria-hidden="true">💪</div>
+            <p data-i18n="resultPlaceholder">Your results will appear here after calculation.</p>
+          </div>
+
+          <div class="result-content hidden" id="macro-result-content">
+            <div class="macro-donut-wrap">
+              <canvas id="macroDonut" width="200" height="200" aria-label="Macro distribution chart"></canvas>
+              <div class="macro-donut-center">
+                <span class="macro-donut-total" id="macroTotal">--</span>
+                <span class="macro-donut-label" data-i18n="caloriesPerDay">cal/day</span>
+              </div>
+            </div>
+
+            <div class="macro-bars">
+              <div class="macro-bar-item">
+                <div class="macro-bar-header">
+                  <span class="macro-bar-name" data-i18n="protein">🥩 Protein</span>
+                  <span class="macro-bar-value" id="proteinGrams">-- g</span>
+                  <span class="macro-bar-pct" id="proteinPct">--%</span>
+                </div>
+                <div class="macro-bar-track"><div class="macro-bar-fill macro-bar-fill--protein" id="proteinBar"></div></div>
+                <span class="macro-bar-cal" id="proteinCal">-- kcal</span>
+              </div>
+              <div class="macro-bar-item">
+                <div class="macro-bar-header">
+                  <span class="macro-bar-name" data-i18n="carbs">🍚 Carbohydrates</span>
+                  <span class="macro-bar-value" id="carbsGrams">-- g</span>
+                  <span class="macro-bar-pct" id="carbsPct">--%</span>
+                </div>
+                <div class="macro-bar-track"><div class="macro-bar-fill macro-bar-fill--carbs" id="carbsBar"></div></div>
+                <span class="macro-bar-cal" id="carbsCal">-- kcal</span>
+              </div>
+              <div class="macro-bar-item">
+                <div class="macro-bar-header">
+                  <span class="macro-bar-name" data-i18n="fats">🥑 Fats</span>
+                  <span class="macro-bar-value" id="fatsGrams">-- g</span>
+                  <span class="macro-bar-pct" id="fatsPct">--%</span>
+                </div>
+                <div class="macro-bar-track"><div class="macro-bar-fill macro-bar-fill--fats" id="fatsBar"></div></div>
+                <span class="macro-bar-cal" id="fatsCal">-- kcal</span>
+              </div>
+            </div>
+
+            <div class="macro-meals">
+              <h3 class="breakdown-title" data-i18n="perMealTitle">Per Meal Split (3 meals)</h3>
+              <div class="meal-row">
+                <span class="meal-macro protein-dot" data-i18n="protein">Protein</span>
+                <span id="mealProtein">--</span>
+              </div>
+              <div class="meal-row">
+                <span class="meal-macro carbs-dot" data-i18n="carbs">Carbs</span>
+                <span id="mealCarbs">--</span>
+              </div>
+              <div class="meal-row">
+                <span class="meal-macro fats-dot" data-i18n="fats">Fats</span>
+                <span id="mealFats">--</span>
+              </div>
+            </div>
+
+            <button class="btn-export" id="exportMacros">
+              <span aria-hidden="true">⬇</span>
+              <span data-i18n="exportReport">Download Report</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- TAB 4: WATER INTAKE -->
+    <!-- ============================================================ -->
+    <section class="tab-panel" id="tab-water" role="tabpanel">
+      <div class="panel-grid">
+
+        <div class="card card--input">
+          <div class="card-header">
+            <h2 class="card-title" data-i18n="waterTitle">Daily Water Intake</h2>
+            <p class="card-desc" data-i18n="waterDesc">Calculate how much water your body needs each day based on your weight, activity, and environment.</p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" data-i18n="unitSystem">Unit System</label>
+            <div class="segmented-control" id="water-unit-control">
+              <button class="seg-btn active" data-unit="metric" data-i18n="metric">Metric (kg)</button>
+              <button class="seg-btn" data-unit="imperial" data-i18n="imperial">Imperial (lbs)</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="water-weight">
+              <span data-i18n="weight">Weight</span>
+              <span class="unit-label" id="waterWeightUnitLabel">kg</span>
+            </label>
+            <input class="form-input" type="number" id="water-weight" min="1" placeholder="70" autocomplete="off" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="water-activity" data-i18n="activityLevel">Activity Level</label>
+            <select class="form-select" id="water-activity">
+              <option value="sedentary" data-i18n="actSedentary">Sedentary (desk job, little/no exercise)</option>
+              <option value="light" data-i18n="actLight">Lightly Active (1–3 days/week)</option>
+              <option value="moderate" data-i18n="actModerate">Moderately Active (3–5 days/week)</option>
+              <option value="very" data-i18n="actVery">Very Active (6–7 days/week)</option>
+              <option value="athlete" data-i18n="actAthlete">Athlete (2x/day, intense training)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="water-climate" data-i18n="climate">Climate / Environment</label>
+            <select class="form-select" id="water-climate">
+              <option value="cool" data-i18n="climateCool">Cool / Temperate</option>
+              <option value="normal" data-i18n="climateNormal" selected>Normal</option>
+              <option value="hot" data-i18n="climateHot">Hot / Humid</option>
+              <option value="veryhot" data-i18n="climateVeryHot">Very Hot / Desert</option>
+            </select>
+          </div>
+
+          <button class="btn-calculate" id="calcWater">
+            <span data-i18n="calculate">Calculate</span>
+            <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+
+        <div class="card card--result" id="water-results" aria-live="polite">
+          <div class="result-placeholder" id="water-placeholder">
+            <div class="placeholder-icon" aria-hidden="true">💧</div>
+            <p data-i18n="resultPlaceholder">Your results will appear here after calculation.</p>
+          </div>
+
+          <div class="result-content hidden" id="water-result-content">
+            <div class="water-visual">
+              <div class="water-bottle-wrap" aria-hidden="true">
+                <div class="water-bottle">
+                  <div class="water-fill" id="waterFill"></div>
+                  <div class="water-waves"></div>
+                </div>
+              </div>
+              <div class="water-main-info">
+                <span class="water-liters" id="waterLiters">--</span>
+                <span class="water-liters-label" data-i18n="litersPerDay">Liters / Day</span>
+                <span class="water-glasses" id="waterGlasses">--</span>
+                <span class="water-glasses-label" data-i18n="glassesPerDay">Glasses / Day</span>
+              </div>
+            </div>
+
+            <div class="water-schedule">
+              <h3 class="breakdown-title" data-i18n="waterScheduleTitle">Daily Drinking Schedule</h3>
+              <div class="schedule-grid" id="waterScheduleGrid"></div>
+            </div>
+
+            <div class="water-tips" id="waterTipsBox">
+              <h3 class="breakdown-title" data-i18n="waterTipsTitle">Hydration Tips</h3>
+              <div class="tips-list" id="waterTipsList"></div>
+            </div>
+
+            <button class="btn-export" id="exportWater">
+              <span aria-hidden="true">⬇</span>
+              <span data-i18n="exportReport">Download Report</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="footer-disclaimer" data-i18n="disclaimer">
+        ⚠️ This tool is for informational purposes only. Always consult a qualified healthcare provider before making significant changes to your diet or exercise routine.
+      </p>
+      <p class="footer-copy">© 2025 FitCalc Pro. Built for fitness enthusiasts worldwide.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
